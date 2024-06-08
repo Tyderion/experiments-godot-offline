@@ -3,8 +3,10 @@ extends StaticBody2D
 @onready var obstacle = load("res://obstacle.tscn")
 @onready var size = $CollisionShape2D.get_shape().size.x
 @export var min_first_obstacle_coordinate: int = 0
-@export var min_obstacle_distance = 150
-@export var max_obstacle_distance = 350
+@export var default_floor_min_distance = 150
+@export var default_floor_max_distance = 350
+@onready var min_obstacle_distance: int = default_floor_min_distance
+@onready var max_obstacle_distance: int = default_floor_max_distance
 
 signal PLAYER_IN_FLOOR
 var has_entered = false
@@ -42,7 +44,7 @@ func add_obstacle_at(position: Vector2) -> bool:
 		return false
 	var obs: Area2D = obstacle.instantiate()
 	obs.position = position
-	print("adding obstacle at (%s, %s)", [obs.position.x, obs.position.y])
+	#print("adding obstacle at (%s, %s)", [obs.position.x, obs.position.y])
 	obs.connect("body_entered", on_obstacle_hit)
 	add_child(obs)
 	obstacles.push_back(obs)
