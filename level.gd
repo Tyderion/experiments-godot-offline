@@ -112,3 +112,7 @@ func _on_restart_button_pressed():
 	restart = true
 	get_tree().reload_current_scene()
 	pass  # Replace with function body.
+
+
+func _on_invincible_toggled(toggled_on):
+	$Player.invincible = toggled_on

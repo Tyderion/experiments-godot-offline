@@ -16,10 +16,10 @@ position = Vector2(-1, 0)
 polygon = PackedVector2Array(10, -21, 10, 13, 8, 17, -8, 17, -10, 13, -10, -21, -8, -25, 8, -25, 10, -21)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(-1, -95.4)
+position = Vector2(-1, -127.4)
 scale = Vector2(0.15625, 0.328125)
 texture = ExtResource("1_qk64y")
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
-position = Vector2(-1, -91.4)
+position = Vector2(-1, -123.4)
 polygon = PackedVector2Array(10, -21, 10, 13, 8, 17, -8, 17, -10, 13, -10, -21, -8, -25, 8, -25, 10, -21)
