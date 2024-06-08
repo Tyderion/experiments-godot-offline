@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
+const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 var has_started = false
+var alive = true;
 
 var has_double_jump = true
 
@@ -12,8 +13,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func jump():
     velocity.y = JUMP_VELOCITY
+    
+    
+func on_hit():
+    alive = false
 
 func _physics_process(delta):
+    if !alive:
+        return
     # Add the gravity.
     if not is_on_floor():
         velocity.y += gravity * delta
@@ -32,12 +39,5 @@ func _physics_process(delta):
         
     if is_on_floor():
         has_double_jump = true
-    ## Get the input direction and handle the movement/deceleration.
-    ## As good practice, you should replace UI actions with custom gameplay actions.
-    #var direction = Input.get_axis("ui_left", "ui_right")
-    #if direction:
-        #velocity.x = direction * SPEED
-    #else:
-        #velocity.x = move_toward(velocity.x, 0, SPEED)
 
     move_and_slide()

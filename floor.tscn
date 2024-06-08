@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://br63qw7bnqu38"]
+[gd_scene load_steps=6 format=3 uid="uid://br63qw7bnqu38"]
 
 [ext_resource type="Texture2D" uid="uid://bvgr7ewhy51iq" path="res://icon.svg" id="1_n8tv0"]
 [ext_resource type="Script" path="res://floor.gd" id="1_uns0k"]
+[ext_resource type="PackedScene" uid="uid://b8bhldp3y264q" path="res://dodge_bar.tscn" id="3_rretx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sbslf"]
 size = Vector2(2905, 125)
@@ -9,22 +10,30 @@ size = Vector2(2905, 125)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2k18"]
 size = Vector2(2905, 342)
 
-[node name="StaticBody2D" type="StaticBody2D"]
+[node name="Floor" type="StaticBody2D"]
 script = ExtResource("1_uns0k")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1116, 64)
+shape = SubResource("RectangleShape2D_sbslf")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1118.5, 0)
+position = Vector2(1133, 65)
 scale = Vector2(24.9453, 1)
 texture = ExtResource("1_n8tv0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1101.5, -1)
-shape = SubResource("RectangleShape2D_sbslf")
+[node name="PlayerDetection" type="Area2D" parent="Sprite2D"]
+position = Vector2(-44.8381, 0)
+scale = Vector2(0.0400877, 1)
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/PlayerDetection"]
 position = Vector2(1101.5, -43)
 shape = SubResource("RectangleShape2D_o2k18")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="DodgeBar" parent="." instance=ExtResource("3_rretx")]
+position = Vector2(234, -16)
+
+[connection signal="body_entered" from="Sprite2D/PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="area_entered" from="DodgeBar" to="." method="_on_low_bar_area_entered"]
+[connection signal="area_shape_entered" from="DodgeBar" to="." method="_on_low_bar_area_shape_entered"]
+[connection signal="body_entered" from="DodgeBar" to="." method="_on_low_bar_body_entered"]

@@ -10,7 +10,7 @@ script = ExtResource("1_lvm1j")
 [node name="Background" type="CanvasLayer" parent="."]
 
 [node name="Floor1" parent="." instance=ExtResource("1_a4p0w")]
-position = Vector2(-39, 617)
+position = Vector2(-39, 615)
 
 [node name="Player" parent="." instance=ExtResource("2_in73f")]
 position = Vector2(-170, 321)
