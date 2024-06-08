@@ -3,30 +3,35 @@
 [ext_resource type="Texture2D" uid="uid://bvgr7ewhy51iq" path="res://icon.svg" id="1_n8tv0"]
 [ext_resource type="Script" path="res://floor.gd" id="1_uns0k"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sbslf"]
-size = Vector2(2905, 125)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2k18"]
-size = Vector2(2905, 342)
+size = Vector2(2959.5, 342)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sbslf"]
+size = Vector2(2961, 125)
 
 [node name="Floor" type="StaticBody2D"]
+z_index = -1
 script = ExtResource("1_uns0k")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1116, 64)
-shape = SubResource("RectangleShape2D_sbslf")
+min_first_obstacle_coordinate = null
+min_obstacle_distance = null
+max_obstacle_distance = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1133, 65)
+position = Vector2(1, 71)
 scale = Vector2(24.9453, 1)
 texture = ExtResource("1_n8tv0")
+offset = Vector2(58.8688, -4)
 
 [node name="PlayerDetection" type="Area2D" parent="Sprite2D"]
-position = Vector2(-44.8381, 0)
+position = Vector2(57.8867, -6)
 scale = Vector2(0.0400877, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/PlayerDetection"]
-position = Vector2(1101.5, -43)
+position = Vector2(35.2499, -107)
 shape = SubResource("RectangleShape2D_o2k18")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1480.5, 66)
+shape = SubResource("RectangleShape2D_sbslf")
 
 [connection signal="body_entered" from="Sprite2D/PlayerDetection" to="." method="_on_player_detection_body_entered"]

@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
+@export var speed: float = 100.0
+@export var invincible = false
 
-const SPEED = 100.0
-const JUMP_VELOCITY = -400.0
+signal DEATH
+const JUMP_VELOCITY = -400.0 
 var has_started = false
 var alive = true;
-@onready var default_sprite_scale = $Sprite2D.scale.y
-#@onready var default_collision_shape : RectangleShape2D = $CollisionShape2D.shape
-#var ducked_collision_shape: RectangleShape2D
 var has_double_jump = true
+var paused = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -20,25 +20,28 @@ func toggle_pause():
     alive = !alive
     
 func on_hit():
+    if invincible:
+        return
     alive = false
+    emit_signal("DEATH")
+    pass
+    
+func start():
+    paused = false
 
 func _ready():
     pass
     
 func _process(delta):
-    if !alive:
+    if !alive or paused:
         return
     if Input.is_action_just_pressed("action_crouch"):
-        $AnimationPlayer.play("duck_animation")
-        #$StandingCollision.disabled = true
-        #$DuckedCollision.disabled = false
+        $AnimationPlayer.play("duck_animation", -1, 2)
     if Input.is_action_just_released("action_crouch"):
-        $AnimationPlayer.play_backwards("duck_animation")
-        #$StandingCollision.disabled = false
-        #$DuckedCollision.disabled = true
+        $AnimationPlayer.play("duck_animation", -1, -2, true)
 
 func _physics_process(delta):
-    if !alive:
+    if !alive or paused:
         return
     # Add the gravity.
     if not is_on_floor():
@@ -53,7 +56,8 @@ func _physics_process(delta):
             has_double_jump = false
     
     if is_on_floor() && !has_started:
-        #velocity.x = SPEED
+        velocity.x = speed
+        print("velocity: %s", velocity.x)
         has_started = true
         
     if is_on_floor():

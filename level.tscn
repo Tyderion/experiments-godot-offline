@@ -1,16 +1,120 @@
-[gd_scene load_steps=4 format=3 uid="uid://d10qsjhvxfukg"]
+[gd_scene load_steps=7 format=3 uid="uid://d10qsjhvxfukg"]
 
 [ext_resource type="PackedScene" uid="uid://br63qw7bnqu38" path="res://floor.tscn" id="1_a4p0w"]
 [ext_resource type="Script" path="res://level.gd" id="1_lvm1j"]
 [ext_resource type="PackedScene" uid="uid://cgwf2vt2gqyqq" path="res://player.tscn" id="2_in73f"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_t1gju"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3yurd"]
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_n2fi7"]
+line_spacing = 40.0
+font_size = 40
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_lvm1j")
 
 [node name="Background" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Floor1" parent="." instance=ExtResource("1_a4p0w")]
-position = Vector2(-39, 615)
+position = Vector2(478, 514)
+min_first_obstacle_coordinate = 100
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UserInterface" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 646.0
+
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface"]
+layout_mode = 0
+offset_left = 695.0
+offset_top = 23.0
+offset_right = 1135.0
+offset_bottom = 46.0
+text = "Points: 0"
+label_settings = SubResource("LabelSettings_t1gju")
+horizontal_alignment = 2
+
+[node name="StartScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1158.0
+offset_bottom = 435.0
+
+[node name="Label" type="Label" parent="CanvasLayer/StartScreen"]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 39.0
+offset_right = 824.0
+offset_bottom = 94.0
+text = "Welcome to Godot-Offline"
+label_settings = SubResource("LabelSettings_3yurd")
+
+[node name="Button" type="Button" parent="CanvasLayer/StartScreen"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 346.0
+offset_right = 611.0
+offset_bottom = 411.0
+theme_override_font_sizes/font_size = 40
+text = "Start"
+
+[node name="Label2" type="Label" parent="CanvasLayer/StartScreen"]
+layout_mode = 0
+offset_left = 447.0
+offset_top = 103.0
+offset_right = 656.0
+offset_bottom = 315.0
+text = "How long can you survive?
+Space to Jump
+C or CTRL to Crouch"
+
+[node name="GameOverScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1151.0
+offset_bottom = 647.0
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverScreen"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 20.0
+offset_right = 1153.0
+offset_bottom = 86.0
+text = "Game Over"
+label_settings = SubResource("LabelSettings_n2fi7")
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/GameOverScreen"]
+layout_mode = 0
+offset_left = 492.0
+offset_top = 199.0
+offset_right = 664.0
+offset_bottom = 264.0
+theme_override_font_sizes/font_size = 40
+text = "Restart"
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer/GameOverScreen"]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 95.0
+offset_right = 684.0
+offset_bottom = 155.0
+text = "You reached 23023 Points"
 
 [node name="Player" parent="." instance=ExtResource("2_in73f")]
-position = Vector2(-355, 582)
+position = Vector2(490, 500)
+speed = 200.0
+invincible = true
+
+[connection signal="pressed" from="CanvasLayer/StartScreen/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/GameOverScreen/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="DEATH" from="Player" to="." method="_on_player_death"]
