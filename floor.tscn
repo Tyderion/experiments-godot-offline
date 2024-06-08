@@ -12,9 +12,6 @@ size = Vector2(2961, 125)
 [node name="Floor" type="StaticBody2D"]
 z_index = -1
 script = ExtResource("1_uns0k")
-min_first_obstacle_coordinate = null
-min_obstacle_distance = null
-max_obstacle_distance = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 71)

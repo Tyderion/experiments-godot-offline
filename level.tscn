@@ -112,7 +112,6 @@ text = "You reached 23023 Points"
 
 [node name="Player" parent="." instance=ExtResource("2_in73f")]
 position = Vector2(490, 500)
-invincible = true
 
 [connection signal="pressed" from="CanvasLayer/StartScreen/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/GameOverScreen/RestartButton" to="." method="_on_restart_button_pressed"]

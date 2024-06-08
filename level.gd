@@ -76,7 +76,7 @@ func _on_player_death():
 
 func increment_points():
 	if game_active:
-		points += 2
+		points += 1
 		$CanvasLayer/UserInterface/Label.text = "Points: %s" % points
 
 
