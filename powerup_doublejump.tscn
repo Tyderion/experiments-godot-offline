@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmad6jh4ukemv"]
+
+[ext_resource type="Texture2D" uid="uid://bvgr7ewhy51iq" path="res://icon.svg" id="1_altg1"]
+[ext_resource type="Script" path="res://powerup_doublejump.gd" id="1_f020c"]
+
+[sub_resource type="Animation" id="Animation_amcjb"]
+resource_name = "bounce"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bouncer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(3, -18), Vector2(3, -30), Vector2(3, -18)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BounceBed:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.406127, 1, 1),
+"update": 0,
+"values": [Vector2(2.40625, -8), Vector2(2.406, -4), Vector2(2.40625, -8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r84pb"]
+_data = {
+"bounce": SubResource("Animation_amcjb")
+}
+
+[node name="PowerUp_DoubleJump" type="Area2D"]
+script = ExtResource("1_f020c")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-12, 3, -22, 3, -22, -11, -12, -11, 17, -12, 27, -12, 27, 3, 17, 3, 16, -5, -12, -5)
+
+[node name="BounceBed" type="Sprite2D" parent="."]
+position = Vector2(2.40625, -8)
+rotation = 1.5708
+scale = Vector2(0.0493267, 0.377929)
+texture = ExtResource("1_altg1")
+
+[node name="LeftPillar" type="Sprite2D" parent="."]
+position = Vector2(-17, -4)
+rotation = 3.14159
+scale = Vector2(0.0898839, 0.123496)
+texture = ExtResource("1_altg1")
+
+[node name="RightPillar" type="Sprite2D" parent="."]
+position = Vector2(22, -5)
+rotation = 3.14159
+scale = Vector2(0.0898839, 0.123496)
+texture = ExtResource("1_altg1")
+
+[node name="Bouncer" type="Sprite2D" parent="."]
+position = Vector2(3, -18)
+rotation = -3.14159
+scale = Vector2(0.156294, 0.152005)
+texture = ExtResource("1_altg1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r84pb")
+}
+autoplay = "bounce"

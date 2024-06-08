@@ -10,6 +10,7 @@ var speed_factor = 0.2
 static var restart = false
 @onready var points = start_points
 var game_active = false
+var did_generate_powerup = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -38,9 +39,18 @@ func update_speed():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_pressed("action_pause"):
-		$Player.toggle_pause()
-		game_active = false
+		pause()
 	pass
+
+
+func pause():
+	$Player.pause()
+	game_active = false
+
+
+func unpause():
+	$Player.unpause()
+	game_active = true
 
 
 func _physics_process(delta):
@@ -60,8 +70,11 @@ func add_floor(name: String):
 	var size_offset = current_floor.get_size()
 	next_floor.position.x += current_floor.get_size()
 	next_floor.connect("PLAYER_IN_FLOOR", add_floor)
+	next_floor.connect("POWERUP", add_powerup)
 	next_floor.default_floor_min_distance *= current_speed
 	next_floor.default_floor_max_distance *= current_speed
+	next_floor.should_add_powerup = points > 100 and !did_generate_powerup
+	did_generate_powerup = next_floor.should_add_powerup
 	print("Speed factor: %s", current_speed)
 	print("Min Floor Distance: %s", next_floor.default_floor_min_distance)
 	next_floor.min_first_obstacle_coordinate = max(next_floor.default_floor_min_distance - current_floor.last_obstacle_offset(), 0)
@@ -82,6 +95,17 @@ func increment_points():
 
 func _on_button_pressed():
 	start()
+
+
+func add_powerup(powerup: String):
+	$Player.add_powerup(powerup)
+	pause()
+	$CanvasLayer/PowerUpReceived.visible = true
+
+
+func _on_continue_pressed():
+	$CanvasLayer/PowerUpReceived.visible = false
+	unpause()
 
 
 func _on_restart_button_pressed():

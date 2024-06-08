@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8bhldp3y264q"]
+[gd_scene load_steps=3 format=3 uid="uid://b8bhldp3y264q"]
 
+[ext_resource type="Script" path="res://obstacle.gd" id="1_84txw"]
 [ext_resource type="Texture2D" uid="uid://bvgr7ewhy51iq" path="res://icon.svg" id="1_luc3o"]
 
 [node name="DodgeBar" type="Area2D"]
 position = Vector2(0, -18)
+script = ExtResource("1_84txw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4.4)

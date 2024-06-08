@@ -12,6 +12,9 @@ var has_started = false
 var alive = true
 var has_double_jump = true
 var paused = true
+var can_double_jump = false
+
+var powerups = []
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -21,8 +24,16 @@ func jump():
 	velocity.y = JUMP_VELOCITY
 
 
-func toggle_pause():
-	alive = !alive
+func pause():
+	alive = false
+
+
+func unpause():
+	alive = true
+
+
+func on_powerup_collect(powerup: String):
+	powerups.push_back(powerup)
 
 
 func on_hit():
@@ -39,6 +50,11 @@ func start():
 
 func _ready():
 	pass
+
+
+func add_powerup(powerup: String):
+	powerups.push_back(powerup)
+	can_double_jump = powerups.has("doublejump")
 
 
 func _process(delta):
@@ -62,7 +78,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("action_jump"):
 		if is_on_floor():
 			jump()
-		if has_double_jump:
+		if can_double_jump and has_double_jump:
 			jump()
 			has_double_jump = false
 
