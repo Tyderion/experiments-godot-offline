@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://br63qw7bnqu38"]
+[gd_scene load_steps=5 format=3 uid="uid://br63qw7bnqu38"]
 
 [ext_resource type="Texture2D" uid="uid://bvgr7ewhy51iq" path="res://icon.svg" id="1_n8tv0"]
 [ext_resource type="Script" path="res://floor.gd" id="1_uns0k"]
-[ext_resource type="PackedScene" uid="uid://b8bhldp3y264q" path="res://dodge_bar.tscn" id="3_rretx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sbslf"]
 size = Vector2(2905, 125)
@@ -30,10 +29,4 @@ scale = Vector2(0.0400877, 1)
 position = Vector2(1101.5, -43)
 shape = SubResource("RectangleShape2D_o2k18")
 
-[node name="DodgeBar" parent="." instance=ExtResource("3_rretx")]
-position = Vector2(234, -16)
-
 [connection signal="body_entered" from="Sprite2D/PlayerDetection" to="." method="_on_player_detection_body_entered"]
-[connection signal="area_entered" from="DodgeBar" to="." method="_on_low_bar_area_entered"]
-[connection signal="area_shape_entered" from="DodgeBar" to="." method="_on_low_bar_area_shape_entered"]
-[connection signal="body_entered" from="DodgeBar" to="." method="_on_low_bar_body_entered"]
